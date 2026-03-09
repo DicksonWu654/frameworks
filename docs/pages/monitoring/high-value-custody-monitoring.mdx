@@ -1,0 +1,128 @@
+---
+title: "High-Value Custody Monitoring | Security Alliance"
+description: "Monitoring priorities for high-value multisigs and reserve systems: transaction lifecycle, configuration changes, validator events, infrastructure health, and secrets access."
+tags:
+  - Engineer/Developer
+  - Security Specialist
+  - Operations
+  - SRE
+contributors:
+  - role: wrote
+    users: [dickson]
+---
+
+import { TagList, AttributionList, TagProvider, TagFilter, ContributeFooter } from '../../../components'
+
+<TagProvider>
+<TagFilter />
+
+# High-Value Custody Monitoring
+
+<TagList tags={frontmatter.tags} />
+<AttributionList contributors={frontmatter.contributors} />
+
+Generic on-chain alerts are not enough for systems that protect large reserves. High-value custody environments need
+monitoring that follows the actual control model: who can sign, what can change, and which supporting systems could
+silently weaken security.
+
+This page focuses on the monitoring domains that matter most for multisigs, reserve custody, and related operating
+infrastructure.
+
+## Multisig Activity
+
+Monitor all high-value transactions and all configuration changes.
+
+### Transaction lifecycle
+
+- transaction created or queued
+- signatures collected
+- transaction executed
+- transaction rejected or cancelled
+
+### Configuration changes
+
+- signer added or removed
+- threshold changed
+- module enabled or disabled
+- guard changed
+
+### Focus areas
+
+- highest-value custody accounts first
+- large or unusual transfers from any account
+- unexpected transaction timing or approval patterns
+
+## Validator or Reserve Operations
+
+If reserve systems depend on staking or validator infrastructure, monitor:
+
+### Exit events
+
+- voluntary exits requested
+- validators entering exiting or exited state
+- unexpected bulk exits
+
+### Slashing and duty events
+
+- any slashing event
+- missed attestations or proposals
+- unusual drops in performance
+
+## Infrastructure Health
+
+Monitor the technical systems that keep the control model functioning.
+
+### Signing or transaction services
+
+- signer availability and readiness
+- request success and failure rates
+- latency spikes
+
+### Execution and coordination systems
+
+- primary and backup status
+- upstream connectivity
+- node health and sync status
+- disk, CPU, memory, and network pressure
+
+## Access and Security
+
+Monitor who is using privileged systems and when sensitive material is accessed.
+
+### Server and operator access
+
+- SSH or console logins
+- sudo or privilege-escalation events
+- failed authentication attempts
+
+### Secrets access
+
+- certificate access outside expected workflows
+- decryption events
+- key-file access
+- new device enrollment for privileged users
+
+## Operational Use
+
+Monitoring is only useful if someone owns the response path.
+
+- define severity levels up front
+- route alerts to multiple channels
+- document who responds first for each alert family
+- review noisy alerts and tune them instead of ignoring them
+
+## Minimum Review Cadence
+
+- **Daily**: review critical alerts and unresolved incidents
+- **Weekly**: review suspicious operational events and failed access attempts
+- **Monthly**: review configuration-change history and coverage gaps
+- **After major changes**: update the monitoring plan to reflect new capabilities or trust boundaries
+
+### See also
+
+- [Guidelines for On-Chain Monitoring](./guidelines)
+- [Monitoring Alert Thresholds](./thresholds)
+- [Trust Boundaries and Capability Inventories](/threat-modeling/trust-boundaries-and-capability-inventories)
+
+</TagProvider>
+<ContributeFooter />

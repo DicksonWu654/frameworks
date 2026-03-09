@@ -124,6 +124,31 @@ Transaction: [Link to executed transaction]
 - Update classification if operational patterns change
 - Maintain current contact information
 
+### Periodic owner verification
+
+For Safe-based multisigs, documentation review should include periodic verification of the actual owner set and control
+configuration:
+
+- Verify owners match current documentation
+- Verify threshold values after any signer change
+- Verify enabled modules and guards are expected
+- Investigate any mismatch between expected and observed configuration
+
+For primary custody safes, monthly review is reasonable. For lower-risk operational safes, quarterly review is often
+enough.
+
+### Hidden or shadow-owner risk
+
+Simple owner enumeration is not always a sufficient audit by itself. If Safe storage has been manipulated, hidden or
+"shadow" owners may not appear in standard owner listings even though they still affect control.
+
+Because of that risk:
+
+- use trusted tooling before putting a Safe into service
+- perform independent storage or configuration analysis for high-value safes
+- review unexpected module, guard, and delegate-call activity carefully
+- treat unexplained owner or threshold discrepancies as an incident until resolved
+
 ## Ongoing Management
 
 ### Regular reviews

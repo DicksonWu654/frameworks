@@ -198,6 +198,7 @@ const config = {
             { text: 'Overview', link: '/infrastructure/overview', dev: true },
             { text: 'Asset Inventory', link: '/infrastructure/asset-inventory', dev: true },
             { text: 'Cloud Infrastructure', link: '/infrastructure/cloud', dev: true },
+            { text: 'Third-Party Infrastructure Oversight', link: '/infrastructure/third-party-infrastructure-oversight', dev: true },
             { text: 'DDoS Protection', link: '/infrastructure/ddos-protection', dev: true },
             {
               text: 'Domain & DNS Security',
@@ -223,6 +224,7 @@ const config = {
           items: [
             { text: 'Overview', link: '/monitoring/overview', dev: true },
             { text: 'Guidelines', link: '/monitoring/guidelines', dev: true },
+            { text: 'High-Value Custody Monitoring', link: '/monitoring/high-value-custody-monitoring', dev: true },
             { text: 'Thresholds', link: '/monitoring/thresholds', dev: true },
           ]
         },
@@ -268,6 +270,7 @@ const config = {
           items: [
             { text: 'Overview', link: '/threat-modeling/overview', dev: true },
             { text: 'Create and Maintain Threat Models', link: '/threat-modeling/create-maintain-threat-models', dev: true },
+            { text: 'Trust Boundaries and Capability Inventories', link: '/threat-modeling/trust-boundaries-and-capability-inventories', dev: true },
             { text: 'Identity Mitigate Threats', link: '/threat-modeling/identity-mitigate-threats', dev: true },
           ]
         },
@@ -449,6 +452,7 @@ const config = {
             { text: 'Custodial Inventory & Controls', link: '/treasury-operations/classification', dev: true },
             { text: 'Registration Documents', link: '/treasury-operations/registration-documents', dev: true },
             { text: 'Enhanced Controls for High-Risk Accounts', link: '/treasury-operations/enhanced-controls', dev: true },
+            { text: 'Separation of Powers and Spending Controls', link: '/treasury-operations/separation-of-powers-and-spending-controls', dev: true },
             { text: 'Guide: Large Cryptocurrency Transfers', link: '/treasury-operations/transaction-verification', dev: true },
           ]
         },

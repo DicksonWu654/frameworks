@@ -1,0 +1,129 @@
+---
+title: "Trust Boundaries and Capability Inventories | Security Alliance"
+description: "Map who must be trusted, what each actor can do, and which failure modes are prevented by code versus operational process."
+tags:
+  - Engineer/Developer
+  - Security Specialist
+  - Risk Management
+contributors:
+  - role: wrote
+    users: [dickson]
+---
+
+import { TagList, AttributionList, TagProvider, TagFilter, ContributeFooter } from '../../../components'
+
+<TagProvider>
+<TagFilter />
+
+# Trust Boundaries and Capability Inventories
+
+<TagList tags={frontmatter.tags} />
+<AttributionList contributors={frontmatter.contributors} />
+
+Basic threat models often list assets and attack scenarios but skip a more important question: **who or what must be
+trusted for the system to remain safe?**
+
+Trust-boundary analysis and capability inventories help answer that question. They force you to document where security
+comes from cryptographic or protocol enforcement, and where it instead depends on humans, operators, service
+providers, recovery parties, or external systems acting correctly.
+
+## What to Map
+
+Start by identifying the actors and systems that can materially change outcomes:
+
+- multisig signer groups
+- operators with privileged infrastructure access
+- recovery custodians or break-glass holders
+- external protocols and custody platforms
+- certificate, identity, or key-management systems
+
+## Trust Boundary Inventory
+
+For each boundary, record the trust assumption and the likely failure mode.
+
+| Boundary | Trust Required | If Compromised |
+| --- | --- | --- |
+| **Signer groups** | Required quorums act honestly and verify what they sign | Unauthorized transactions, fund loss, or governance capture |
+| **Infrastructure operator** | Operator runs systems correctly and preserves security controls | Outage, forced action, slashing, degraded availability |
+| **Recovery custodians** | Recovery material is used only for legitimate recovery | Unauthorized recovery, disruptive exits, or forced rotation |
+| **External protocols or vendors** | Third-party systems behave as designed | Frozen operations, faulty execution, or fund loss |
+| **PKI / certificates / secrets** | Credentials are not stolen or misused | Unauthorized service access or request forgery |
+
+## Capability Inventory
+
+A capability inventory should answer: who can do what, and what is the blast radius if that capability is abused?
+
+| Capability | Holder | Effect if Abused |
+| --- | --- | --- |
+| Reserve movement | Custody quorum | Direct loss of treasury assets |
+| Routine operating spend | Operations quorum | Limited loss within the operating path |
+| Signer or threshold changes | Admin quorum | Governance takeover or control weakening |
+| Infrastructure deployment | Privileged operator | Outage, hidden config drift, policy bypass |
+| Recovery material reconstruction | Custodians or break-glass holders | Recovery abuse or disruption |
+| Certificate rotation or secret access | PKI or secret admins | Service impersonation or unauthorized requests |
+
+## Code-Enforced vs Process-Enforced Controls
+
+Separate the controls that are hard-enforced by software from the controls that are only documented expectations.
+
+### Code often enforces
+
+- threshold counts
+- nonce and replay protections
+- immutable destinations or withdrawal addresses
+- smart contract roles
+- transaction format and signature validity
+
+### Code usually does not enforce
+
+- signer key hygiene
+- review quality before signing
+- operator honesty
+- response-time commitments
+- geographic or organizational separation
+- incident escalation quality
+
+Treat every process-enforced control as a trust assumption until you can tie it to a technical control or a strong
+review mechanism.
+
+## Failure Mode Review
+
+For each boundary, document the worst realistic outcome:
+
+- Can this actor directly steal funds?
+- Can they only cause disruption?
+- Can they force a recovery path or exit event?
+- Can they reduce effective approval thresholds?
+- Can they create a hidden state that standard tooling will not reveal?
+
+This last question matters for systems like Safe, where hidden or shadow-owner conditions may not be obvious from a
+simple owner listing if storage has been manipulated.
+
+## Review Questions
+
+Use these questions when updating the model:
+
+1. Which actors can move funds, and which can only influence operations?
+2. Which control boundaries are enforced on-chain or by software?
+3. Which assumptions depend on manual review or organizational trust?
+4. What is the minimum compromise set required for catastrophic loss?
+5. What events should monitoring detect for each trust boundary?
+
+## Maintenance
+
+Update trust-boundary and capability documents:
+
+- after signer or threshold changes
+- after operator or vendor changes
+- after new modules, guards, or admin roles are added
+- after incidents or near misses
+- during periodic architecture reviews
+
+### See also
+
+- [Create and Maintain Threat Models](./create-maintain-threat-models)
+- [Identify & Mitigate Threats](./identity-mitigate-threats)
+- [Monitoring Guidelines](/monitoring/guidelines)
+
+</TagProvider>
+<ContributeFooter />

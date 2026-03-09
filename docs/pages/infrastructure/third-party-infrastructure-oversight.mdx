@@ -1,0 +1,121 @@
+---
+title: "Oversight for Third-Party-Operated Infrastructure | SEAL"
+description: "How to define approval boundaries, monitoring expectations, and disaster coordination when critical infrastructure is operated by an external partner."
+tags:
+  - Engineer/Developer
+  - Security Specialist
+  - Devops
+  - Cloud
+  - SRE
+contributors:
+  - role: wrote
+    users: [dickson]
+---
+
+import { TagList, AttributionList, TagProvider, TagFilter, ContributeFooter } from '../../../components'
+
+<TagProvider>
+<TagFilter />
+
+# Oversight for Third-Party-Operated Infrastructure
+
+<TagList tags={frontmatter.tags} />
+<AttributionList contributors={frontmatter.contributors} />
+
+Many teams depend on external operators for critical infrastructure. Even when a third party performs day-to-day
+operations, the asset owner still needs a documented oversight model that defines approval boundaries, reporting
+expectations, and emergency coordination.
+
+This is especially important for staking systems, deployment operators, hosted custody workflows, and other systems
+where the operator can cause outages or loss, but does not directly own the underlying assets.
+
+## Role Model
+
+| Role | Responsibility |
+| --- | --- |
+| **Infrastructure operator** | Runs the infrastructure, applies updates, maintains monitoring, and handles incidents |
+| **Asset owner or oversight team** | Reviews major changes, monitors performance, and approves exceptional actions |
+| **Security reviewer** | Performs periodic assessment of control design and major changes |
+
+## Approval Boundaries
+
+Document which changes require notice, review, or explicit approval.
+
+| Change Type | Suggested Handling |
+| --- | --- |
+| Routine security patches | Operator notifies; operator proceeds immediately |
+| Time-bound mandatory updates | Operator notifies; execution follows documented deadline |
+| Major version changes | Review before execution |
+| Architecture changes | Review before execution |
+| Client diversity or provider concentration changes | Review before execution |
+| Changes affecting custody or withdrawal authority | Explicit approval required |
+
+## Custody Boundaries
+
+When an operator runs infrastructure that influences funds or reserves, document what they **can** and **cannot** do.
+
+Examples:
+
+- The operator may control uptime, configuration, and transaction submission
+- The operator may be able to cause exits, delays, or disruption
+- The operator should not have unilateral control over reserve movements or withdrawal destinations
+
+If technical design enforces these limits, document that clearly. If it does not, treat them as trust assumptions and
+review them explicitly.
+
+## Operator Expectations
+
+Set written expectations for the external operator:
+
+- Maintain uptime and service health targets
+- Apply security patches quickly
+- Maintain monitoring and alerting
+- Preserve rollback capability for major changes
+- Report incidents immediately
+- Coordinate before material changes
+
+## Major Change Review
+
+When the operator proposes a significant change, review at least:
+
+1. The reason for the change
+2. Release notes or change details
+3. Whether diversity and redundancy are preserved
+4. Whether rollback is possible
+5. Whether the change affects custody, transaction routing, or recovery assumptions
+
+## Disaster Recovery Coordination
+
+Define the owner's role before an incident happens.
+
+### If the operator reports a disruption
+
+1. Acknowledge the incident through the designated channel
+2. Confirm expected impact and recovery timeline
+3. Monitor progress against agreed milestones
+4. Escalate if recovery stalls or assumptions change
+5. Coordinate any owner-side actions required for recovery
+
+### If the operator is unreachable
+
+1. Attempt contact through backup channels
+2. Treat the event as a security concern until disproven
+3. Assess whether emergency owner-controlled actions are needed
+4. Prepare fallback infrastructure or containment plans if they exist
+
+## Annual Review Checklist
+
+- Review the operator's security practices
+- Review incident history and response quality
+- Review monitoring coverage and escalation paths
+- Confirm custody boundaries still hold
+- Confirm emergency contacts and backup channels are current
+
+### See also
+
+- [Cloud Infrastructure](/infrastructure/cloud)
+- [Identity And Access Management](/infrastructure/identity-and-access-management)
+- [Monitoring Guidelines](/monitoring/guidelines)
+
+</TagProvider>
+<ContributeFooter />

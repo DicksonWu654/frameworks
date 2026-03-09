@@ -1,0 +1,152 @@
+---
+title: "Separation of Powers and Spending Controls | SEAL"
+description: "A treasury control pattern for separating principal custody from routine operations using bounded allowances, dual approvals, and periodic owner audits."
+tags:
+  - Treasury Ops
+  - Operations
+  - Risk Management
+  - Multisig Security
+contributors:
+  - role: wrote
+    users: [dickson]
+---
+
+import {
+  TagList,
+  AttributionList,
+  TagProvider,
+  TagFilter,
+  ContributeFooter,
+} from "../../../components";
+
+<TagProvider>
+<TagFilter />
+
+# Separation of Powers and Spending Controls
+
+<TagList tags={frontmatter.tags} />
+<AttributionList contributors={frontmatter.contributors} />
+
+For higher-risk treasury systems, a single multisig often has too much authority. A stronger pattern is to separate
+routine operational spending from principal custody, and to make the approval path for each category explicit.
+
+This control model is especially useful when a treasury must support regular operational transfers while preserving a
+much stronger approval threshold for reserve movements.
+
+## Summary
+
+Use separate control paths for:
+
+- **Routine operations**: expected transfers that fit within a bounded spending policy
+- **Principal custody**: reserve movements, staking changes, and other transactions that materially change treasury risk
+- **Emergency coordination**: incidents that require communication across the operating, oversight, and infrastructure
+  roles
+
+## Example Role Model
+
+| Role | Responsibility |
+| --- | --- |
+| **Operating multisig** | Routine treasury operations, scheduled payouts, approved recurring activity |
+| **Custody multisig** | Holds principal reserves and controls high-impact assets or withdrawal rights |
+| **Oversight group** | Approves exceptional or principal movements and reviews major control changes |
+| **Operator or service provider** | Executes delegated technical operations where applicable |
+
+## Transaction Categories
+
+Define transaction classes before funds move:
+
+| Transaction Type | Typical Handling |
+| --- | --- |
+| Routine operating transfer | Operating multisig only, within pre-approved limits |
+| Treasury payout or distribution | Operating multisig, with full verification and documentation |
+| Principal movement | Custody path plus separate oversight approval |
+| Staking or reserve reallocation | Custody path plus oversight approval |
+| Emergency action | Incident-specific coordination path with explicit escalation rules |
+
+## Bounded Operating Allowances
+
+If your treasury supports recurring operational spend, use a bounded allowance instead of granting broad direct access
+to reserves.
+
+### Core controls
+
+- Set a defined beneficiary or operating account
+- Limit the asset scope
+- Limit the amount available in each period
+- Define a reset period clearly
+- Require explicit approval for the initial setup and any later changes
+
+### Example allowance fields
+
+| Field | Purpose |
+| --- | --- |
+| Beneficiary | The operating account allowed to spend |
+| Asset | Which token or asset the allowance applies to |
+| Amount | Maximum spend in a period |
+| Reset period | Daily, weekly, or monthly refresh interval |
+| Setup authority | Which parties must approve creation or modification |
+
+### Operating allowance checklist
+
+- Verify the allowance is configured on the correct treasury account
+- Verify the beneficiary address independently
+- Verify the current remaining allowance before spending
+- Track cumulative usage inside the active period
+- Log all allowance-based transfers in treasury records
+
+## Principal Movements
+
+Principal movements should not reuse the same path as routine operations.
+
+### Recommended controls
+
+- Use a separate custody account or separate approval path
+- Require both the operating group and a distinct oversight group to approve
+- Document the purpose, recipient, and expected impact before signatures are collected
+- Treat reserve reallocations, staking changes, and emergency recoveries as principal events unless documented otherwise
+
+### Coordination checklist
+
+1. Prepare the proposal with full context and supporting references
+2. Notify all required approval groups through designated channels
+3. Allow time for independent review
+4. Verify the recipient, amount, and transaction intent through trusted tooling
+5. Record final execution and update treasury records
+
+## Review and Reconciliation
+
+Minimum review cadence:
+
+- **Monthly**: reconcile routine spending, remaining limits, and recorded activity
+- **Quarterly**: review thresholds, approval groups, and treasury classification
+- **After major changes**: review whether the operating and custody split still fits the organization
+
+## Safe Owner Verification
+
+If you rely on Safe-based treasury controls, verify ownership and configuration on a regular schedule.
+
+- Review owner sets against current documentation
+- Review threshold values after every signer change
+- Review enabled modules and guards
+- Investigate any discrepancy between expected configuration and observed state
+
+For primary custody safes, monthly review is reasonable. For lower-risk operational safes, quarterly review is often
+enough.
+
+## When to Use This Pattern
+
+This model is a strong fit when:
+
+- the treasury has large long-term reserves
+- routine operations still need predictable liquidity
+- a technical operator or service provider participates in part of the workflow
+- the organization wants stronger controls for reserve movements than for day-to-day operations
+
+### See also
+
+- [Custodial Treasury Security: Classification Framework](./classification)
+- [Enhanced Controls for High-Risk Accounts](./enhanced-controls)
+- [Guide: Large Cryptocurrency Transfers](./transaction-verification)
+
+</TagProvider>
+<ContributeFooter />
