@@ -58,7 +58,7 @@ DeIRF
 Dependabot
 Deseat
 dev
-Devops
+DevOps
 DevSecOps
 discoverable
 DIY
@@ -307,3 +307,6 @@ reauthentication
 CAIP
 unbonding
 unbond
+GitHub
+GitLab
+GoDaddy
